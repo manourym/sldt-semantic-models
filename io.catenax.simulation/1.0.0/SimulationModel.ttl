@@ -15,7 +15,7 @@
    samm:preferredName "Simulation Model"@en ;
    samm:description "A semantic model for exchanging simulation models (e.g., FMUs, CAE decks) compliant with ProSTEP SmartSE recommendations. It groups metadata into PDM, Model, Analysis, Hardware, and Result categories."@en ;
    samm:version "1.6.0" ;
-   samm:properties ( :catenaXId
+   samm:properties ( :globalAssetId
                      :pdmInformation
                      :modelInformation
                      :analysisSettings
@@ -31,9 +31,9 @@
 # ROOT PROPERTIES
 #######################################################################
 
-:catenaXId a samm:Property ;
-   samm:preferredName "Catena-X ID"@en ;
-   samm:description "The globally unique identifier (UUID v4) for this specific simulation model instance within the Catena-X dataspace."@en ;
+:globalAssetId a samm:Property ;
+   samm:preferredName "Global asset ID"@en ;
+   samm:description "The globally unique identifier (UUID v4) for this specific simulation model instance within the dataspace."@en ;
    samm:characteristic :UuidV4Trait ;
    samm:exampleValue "055c1128-0375-47c8-98de-7cf802c3241d" .
 
@@ -89,7 +89,7 @@
 :ExternalBinaryModelDataEntity a samm:Entity ;
    samm:preferredName "External Binary Model Data"@en ;
    samm:description "Represents a single external binary file. It includes the ID to fetch the file and tags to describe its role (e.g., 'Result', 'Model')."@en ;
-   samm:properties ( :catenaXId
+   samm:properties ( :globalAssetId
                      [ samm:property :semanticTags; samm:optional true ]
                      [ samm:property :customTags; samm:optional true ] ) .
 
