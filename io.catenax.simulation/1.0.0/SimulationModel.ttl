@@ -10,6 +10,7 @@
 @prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.1.0#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <urn:samm:io.catenax.simulation_model.minimal:1.6.0#> .
+@prefix binary: <urn:samm:io.catenax.binary_exchange:1.0.0#> .
 
 :SimulationModel a samm:Aspect ;
    samm:preferredName "Simulation Model"@en ;
@@ -40,7 +41,8 @@
 :simulationModelBinary a samm:Property ;
    samm:preferredName "Simulation Model Binaries"@en ;
    samm:description "A collection of references to the actual binary files (e.g., FMU, loose files) associated with this simulation model. These point to external storage via their own Catena-X IDs."@en ;
-   samm:characteristic :SetOfExternalBinaryModelDataCharacteristic .
+   samm:see binary:binaryFile ;
+   samm:characteristic binary:FileWithContentType .
 
 :pdmInformation a samm:Property ;
    samm:preferredName "PDM Information"@en ;
