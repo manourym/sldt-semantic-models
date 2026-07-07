@@ -1,0 +1,135 @@
+
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.2.0#> .
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.2.0#> .
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.2.0#> .
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.2.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <urn:samm:io.catenax.battery.supplier_data_model.circularity:1.0.0#> .
+
+:SupplierCircularity a samm:Aspect ;
+   samm:preferredName "circularity for supplier data model"@en ;
+   samm:preferredName "Zirkularität für das Lieferantendatenmodell"@de ;
+   samm:description "Contains the circularity information of a supplied product (material, substance, mixture or component)."@en ;
+   samm:description "Enthält die Zirkularitätsinformationen eines gelieferten Produkts (Stoff, Gemisch oder Komponente)."@de ;
+   samm:properties (
+   [ samm:property :recycledContent; samm:payloadName "RecycledContentInformation" ]
+   [ samm:property :renewableContent; samm:optional true; samm:payloadName "RenewableContent" ]
+   ) ;
+   samm:operations ( ) ;
+   samm:events ( ) ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0> .
+
+######################################################################
+# Recycled content
+######################################################################
+
+:recycledContent a samm:Property ;
+   samm:preferredName "recycled content"@en ;
+   samm:preferredName "Rezyklatanteil"@de ;
+   samm:description "Recycled content of the supplied product: for each relevant material, the share recovered from pre-consumer waste and the share recovered from post-consumer waste, each as a percentage of the total amount of that material in the supplied product."@en ;
+   samm:description "Rezyklatanteil des gelieferten Produkts: je relevantem Material der Anteil aus Pre-Consumer-Abfall und der Anteil aus Post-Consumer-Abfall, jeweils als Prozentsatz der Gesamtmenge dieses Materials im gelieferten Produkt."@de ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#recycledContent> ;
+   samm:characteristic :RecycledContentList .
+
+:RecycledContentList a samm-c:List ;
+   samm:preferredName "recycled content list"@en ;
+   samm:description "List of recycled content declarations, one entry per material."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#RecycledContentList> ;
+   samm:dataType :RecycledContentEntity .
+
+:RecycledContentEntity a samm:Entity ;
+   samm:preferredName "recycled content"@en ;
+   samm:description "Recycled content declaration for one material: the material name and its recycled shares from pre-consumer and post-consumer waste."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#RecycledContent> ;
+   samm:properties (
+   [ samm:property :recycledMaterial; samm:payloadName "RecycledMaterial" ]
+   [ samm:property :preConsumerShare; samm:payloadName "PreConsumerShare" ]
+   [ samm:property :postConsumerShare; samm:payloadName "PostConsumerShare" ]
+   ) .
+
+:recycledMaterial a samm:Property ;
+   samm:preferredName "recycled material"@en ;
+   samm:preferredName "Rezykliertes Material"@de ;
+   samm:description "The material for which the recycled shares are declared."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#recycledMaterial> ;
+   samm:characteristic :RecycledMaterialEnumeration ;
+   samm:exampleValue "Nickel" .
+
+:preConsumerShare a samm:Property ;
+   samm:preferredName "pre-consumer share"@en ;
+   samm:preferredName "Pre-Consumer-Anteil"@de ;
+   samm:description "Share of the material recovered from pre-consumer waste (manufacturing waste, excluding run-around scrap), as a percentage of the total amount of that material in the supplied product."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#preConsumerShare> ;
+   samm:characteristic :PreConsumerShareTrait ;
+   samm:exampleValue "12.5"^^xsd:float .
+
+:postConsumerShare a samm:Property ;
+   samm:preferredName "post-consumer share"@en ;
+   samm:preferredName "Post-Consumer-Anteil"@de ;
+   samm:description "Share of the material recovered from post-consumer waste (end-of-life scrap), as a percentage of the total amount of that material in the supplied product."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#postConsumerShare> ;
+   samm:characteristic :PostConsumerShareTrait ;
+   samm:exampleValue "4.2"^^xsd:float .
+
+######################################################################
+# Renewable content
+######################################################################
+
+:renewableContent a samm:Property ;
+   samm:preferredName "renewable content"@en ;
+   samm:preferredName "Anteil erneuerbarer Materialien"@de ;
+   samm:description "Share of renewable material content in the supplied product, as a percentage of the total mass. A renewable material is a material made of natural resources that can be replenished."@en ;
+   samm:description "Anteil erneuerbarer Materialien im gelieferten Produkt als Prozentsatz der Gesamtmasse. Ein erneuerbares Material besteht aus natürlichen Ressourcen, die nachwachsen bzw. sich erneuern können."@de ;
+   samm:see <urn:irdi:0173-1#02-ABL867#001> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#renewableContent> ;
+   samm:characteristic :RenewableContentMeasurement ;
+   samm:exampleValue "8.0"^^xsd:float .
+
+######################################################################
+# Characteristics and constraints
+######################################################################
+
+:RecycledMaterialEnumeration a samm-c:Enumeration ;
+   samm:preferredName "recycled material"@en ;
+   samm:description "Materials for which recycled content is declared."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#RecycledMaterial> ;
+   samm:dataType xsd:string ;
+   samm-c:values ( "Cobalt" "Nickel" "Lithium" "Lead" ) .
+
+:PreConsumerShareTrait a samm-c:Trait ;
+   samm-c:baseCharacteristic :PreConsumerShareMeasurement ;
+   samm-c:constraint :ShareRangeConstraint .
+
+:PostConsumerShareTrait a samm-c:Trait ;
+   samm-c:baseCharacteristic :PostConsumerShareMeasurement ;
+   samm-c:constraint :ShareRangeConstraint .
+
+:PreConsumerShareMeasurement a samm-c:Measurement ;
+   samm:preferredName "pre-consumer share"@en ;
+   samm:description "A percentage share measurement."@en ;
+   samm:dataType xsd:float ;
+   samm-c:unit unit:percent .
+
+:PostConsumerShareMeasurement a samm-c:Measurement ;
+   samm:preferredName "post-consumer share"@en ;
+   samm:description "A percentage share measurement."@en ;
+   samm:dataType xsd:float ;
+   samm-c:unit unit:percent .
+
+:RenewableContentMeasurement a samm-c:Measurement ;
+   samm:preferredName "renewable content"@en ;
+   samm:description "A percentage share measurement."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#RenewableContent> ;
+   samm:dataType xsd:float ;
+   samm-c:unit unit:percent .
+
+:ShareRangeConstraint a samm-c:RangeConstraint ;
+   samm:preferredName "share range"@en ;
+   samm:description "A percentage share must lie between 0 and 100."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.circularity:1.0.0#ConsumerShareRange> ;
+   samm-c:minValue "0"^^xsd:float ;
+   samm-c:maxValue "100"^^xsd:float ;
+   samm-c:lowerBoundDefinition samm-c:AT_LEAST ;
+   samm-c:upperBoundDefinition samm-c:AT_MOST .
