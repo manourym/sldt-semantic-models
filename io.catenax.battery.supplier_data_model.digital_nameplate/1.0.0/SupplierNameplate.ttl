@@ -1,0 +1,221 @@
+
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.2.0#> .
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.2.0#> .
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.2.0#> .
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.2.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <urn:samm:io.catenax.battery.supplier_data_model.digital_nameplate:1.0.0#> .
+
+:SupplierNameplate a samm:Aspect ;
+   samm:preferredName "nameplate for supplier data model"@en ;
+   samm:preferredName "Typenschild für das Lieferantendatenmodell"@de ;
+   samm:description "Contains the general identification information of a supplied product (material, substance, mixture or component) and its manufacturer."@en ;
+   samm:description "Enthält die allgemeinen Identifikationsinformationen eines gelieferten Produkts (Stoff, Gemisch oder Komponente) und dessen Herstellers."@de ;
+   samm:properties (
+   [ samm:property :productIdentifier; samm:payloadName "ProductIdentifier" ]
+   [ samm:property :serialNumber; samm:optional true; samm:payloadName "SerialNumber" ]
+   [ samm:property :batchOrLotIdentifier; samm:optional true; samm:payloadName "BatchOrLotIdentifier" ]
+   [ samm:property :manufacturerName; samm:payloadName "ManufacturerName" ]
+   [ samm:property :manufacturerIdentifier; samm:payloadName "ManufacturerIdentifier" ]
+   [ samm:property :addressInformation; samm:payloadName "AddressInformation" ]
+   [ samm:property :uniqueFacilityIdentifier; samm:payloadName "UniqueFacilityIdentifier" ]
+   [ samm:property :manufacturingPlace; samm:optional true; samm:payloadName "ManufacturingPlace" ]
+   [ samm:property :dateOfManufacture; samm:payloadName "DateOfManufacture" ]
+   [ samm:property :productMass; samm:optional true; samm:payloadName "ProductMass" ]
+   ) ;
+   samm:operations ( ) ;
+   samm:events ( ) ;
+   samm:see <https://admin-shell.io/idta/nameplate/3/0/Nameplate> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0> .
+
+######################################################################
+# Product identification
+######################################################################
+
+:productIdentifier a samm:Property ;
+   samm:preferredName "product identifier"@en ;
+   samm:preferredName "Produktkennung"@de ;
+   samm:description "Unique identifier of the supplied product (e.g. article number, material number or product URI) as assigned by the supplier."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#uriOfTheProduct> ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "MAT-004711-DE" .
+
+:serialNumber a samm:Property ;
+   samm:preferredName "serial number"@en ;
+   samm:preferredName "Seriennummer"@de ;
+   samm:description "Unique combination of numbers and letters identifying the individual supplied item once manufactured. Relevant for serialised components (e.g. mechanical parts); typically not applicable to bulk materials."@en ;
+   samm:see <urn:irdi:0112/2///61987%23ABA951%23009> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#serialNumber> ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "A12345-X75EN" .
+
+:batchOrLotIdentifier a samm:Property ;
+   samm:preferredName "batch or lot identifier"@en ;
+   samm:preferredName "Chargen-/Losnummer"@de ;
+   samm:description "Identifier of the production batch or lot of the supplied material or component. Primary item-level identification for non-serialised products."@en ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "LOT-2026-07-0042" .
+
+######################################################################
+# Manufacturer identification
+######################################################################
+
+:manufacturerName a samm:Property ;
+   samm:preferredName "manufacturer name"@en ;
+   samm:preferredName "Herstellername"@de ;
+   samm:description "Legally valid designation of the natural or judicial person which is directly responsible for the design, production, packaging and labeling of the supplied product in respect to its being brought into circulation."@en ;
+   samm:description "Name des Herstellers des gelieferten Produkts."@de ;
+   samm:see <urn:irdi:0112/2///61987%23ABA565%23009> ;
+   samm:see <urn:irdi:0173-1%2302-AAO677%23004> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#manufacturerName> ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "Muster AG"@de .
+
+:manufacturerIdentifier a samm:Property ;
+   samm:preferredName "identifier of the manufacturer"@en ;
+   samm:preferredName "Herstellerkennung"@de ;
+   samm:description "Unique identifier of the manufacturer of the supplied product."@en ;
+   samm:see <urn:irdi:0173-1%2302-AAO677%23004> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.technical_data:1.0.0#manufacturerIdentifier> ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "BPNL00000003AYRE" .
+
+:addressInformation a samm:Property ;
+   samm:preferredName "address of the manufacturer"@en ;
+   samm:preferredName "Adresse des Herstellers"@de ;
+   samm:description "The manufacturer information postal address, indicating a single contact point, and web address if available."@en ;
+   samm:see <urn:irdi:0173-1#02-AAQ837#008> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#addressInformation> ;
+   samm:characteristic :AddressInformationCharacteristic .
+
+######################################################################
+# Manufacturing site and date
+######################################################################
+
+:uniqueFacilityIdentifier a samm:Property ;
+   samm:preferredName "unique identifier of a facility"@en ;
+   samm:preferredName "Eindeutige Standortkennung"@de ;
+   samm:description "Unique string of characters for the identification of the location or building where the supplied product was manufactured (e.g. BPN-S in Catena-X context, GLN). The manufacturing place should be uniquely identifiable."@en ;
+   samm:see <urn:irdi:0173-1#02-AAV646#003> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#uniqueFacilityIdentifier> ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "BPNS0000000001XY" .
+
+:manufacturingPlace a samm:Property ;
+   samm:preferredName "manufacturing place"@en ;
+   samm:preferredName "Herstellungsort"@de ;
+   samm:description "Postal address of the site where the supplied product was manufactured."@en ;
+   samm:characteristic :AddressInformationCharacteristic .
+
+:dateOfManufacture a samm:Property ;
+   samm:preferredName "date of manufacture"@en ;
+   samm:preferredName "Herstelldatum"@de ;
+   samm:description "Date when the supplied item or batch was manufactured."@en ;
+   samm:see <urn:irdi:0112/2///61987%23ABB757%23007> ;
+   samm:see <urn:samm:io.admin-shell.idta.batterypass.digital_nameplate:1.0.0#dateOfManufacture> ;
+   samm:characteristic :Date ;
+   samm:exampleValue "2026-01-01"^^xsd:date .
+
+######################################################################
+# Mass
+######################################################################
+
+:productMass a samm:Property ;
+   samm:preferredName "product mass"@en ;
+   samm:preferredName "Produktmasse"@de ;
+   samm:description "Mass of the supplied product unit (item or declared reference unit) in kilogram. Downstream reference value for weight-by-weight thresholds."@en ;
+   samm:characteristic :MassMeasurement ;
+   samm:exampleValue "12.5"^^xsd:double .
+
+######################################################################
+# Characteristics and entities
+######################################################################
+
+:MultiLanguageTexts a samm-c:Set ;
+   samm:preferredName "multilanguage text set"@en ;
+   samm:description "A set of language-text items."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.shared:3.1.0#MultiLanguageTexts> ;
+   samm-c:elementCharacteristic samm-c:MultiLanguageText .
+
+:Date a samm:Characteristic ;
+   samm:preferredName "date"@en ;
+   samm:description "A calendar date compliant with ISO 8601."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.digital_nameplate:3.0.0#Date> ;
+   samm:dataType xsd:date .
+
+:MassMeasurement a samm-c:Measurement ;
+   samm:preferredName "mass measurement"@en ;
+   samm:description "A measurement of mass in kilogram."@en ;
+   samm:dataType xsd:double ;
+   samm-c:unit unit:kilogram .
+
+:AddressInformationCharacteristic a samm-c:SingleEntity ;
+   samm:preferredName "address information"@en ;
+   samm:description "Characteristic for a postal address."@en ;
+   samm:see <urn:samm:io.admin-shell.idta.digital_nameplate:3.0.0#AddressInformationCharacteristic> ;
+   samm:dataType :AddressInformationEntity .
+
+:AddressInformationEntity a samm:Entity ;
+   samm:preferredName "address information"@en ;
+   samm:description "Compact postal address of a manufacturer or manufacturing site."@en ;
+   samm:see <urn:irdi:0173-1#02-AAQ837#005> ;
+   samm:properties (
+   [ samm:property :company; samm:optional true; samm:payloadName "Company" ]
+   [ samm:property :street; samm:payloadName "Street" ]
+   [ samm:property :zipCode; samm:payloadName "ZipCode" ]
+   [ samm:property :cityTown; samm:payloadName "CityTown" ]
+   [ samm:property :nationalCode; samm:payloadName "NationalCode" ]
+   [ samm:property :email; samm:optional true; samm:payloadName "Email" ]
+   [ samm:property :phone; samm:optional true; samm:payloadName "Phone" ]
+   [ samm:property :webAddress; samm:optional true; samm:payloadName "WebAddress" ]
+   ) .
+
+:company a samm:Property ;
+   samm:preferredName "company"@en ;
+   samm:description "Name of the company at this address, if deviating from the manufacturer name."@en ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "Muster AG"@de .
+
+:street a samm:Property ;
+   samm:preferredName "street"@en ;
+   samm:description "Street name and house number."@en ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "Musterstraße 1"@de .
+
+:zipCode a samm:Property ;
+   samm:preferredName "zip code"@en ;
+   samm:description "Postal code of the address."@en ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "12345"@de .
+
+:cityTown a samm:Property ;
+   samm:preferredName "city/town"@en ;
+   samm:description "City or town of the address."@en ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "Musterstadt"@de .
+
+:nationalCode a samm:Property ;
+   samm:preferredName "national code"@en ;
+   samm:description "Country code of the address, preferably ISO 3166-1 alpha-2."@en ;
+   samm:characteristic :MultiLanguageTexts ;
+   samm:exampleValue "DE"@de .
+
+:email a samm:Property ;
+   samm:preferredName "email"@en ;
+   samm:description "Email address of the single contact point."@en ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "contact@example.com" .
+
+:phone a samm:Property ;
+   samm:preferredName "phone"@en ;
+   samm:description "Phone number of the single contact point including country code."@en ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "+49 123 4567890" .
+
+:webAddress a samm:Property ;
+   samm:preferredName "web address"@en ;
+   samm:description "Web address of the manufacturer, if available."@en ;
+   samm:characteristic samm-c:Text ;
+   samm:exampleValue "https://www.example.com" .
