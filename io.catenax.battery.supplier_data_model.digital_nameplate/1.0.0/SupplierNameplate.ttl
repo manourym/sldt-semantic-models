@@ -16,14 +16,14 @@
    samm:properties (
    [ samm:property :productIdentifier; samm:payloadName "ProductIdentifier" ]
    [ samm:property :serialNumber; samm:optional true; samm:payloadName "SerialNumber" ]
-   [ samm:property :batchOrLotIdentifier; samm:optional true; samm:payloadName "BatchOrLotIdentifier" ]
+   [ samm:property :batchOrLotIdentifier; samm:optional true; samm:payloadName "BatchOrLotIdentifier" ] #added / not in IDTA model
    [ samm:property :manufacturerName; samm:payloadName "ManufacturerName" ]
    [ samm:property :manufacturerIdentifier; samm:payloadName "ManufacturerIdentifier" ]
-   [ samm:property :addressInformation; samm:payloadName "AddressInformation" ]
+   [ samm:property :addressInformation; samm:payloadName "AddressInformation" ] #keed optional and keep all attributes from idta model
    [ samm:property :uniqueFacilityIdentifier; samm:payloadName "UniqueFacilityIdentifier" ]
-   [ samm:property :manufacturingPlace; samm:optional true; samm:payloadName "ManufacturingPlace" ]
+   [ samm:property :manufacturingPlace; samm:optional true; samm:payloadName "ManufacturingPlace" ] #remove -> redundant taken over by Battery Pass long list
    [ samm:property :dateOfManufacture; samm:payloadName "DateOfManufacture" ]
-   [ samm:property :productMass; samm:optional true; samm:payloadName "ProductMass" ]
+   [ samm:property :productMass; samm:optional true; samm:payloadName "ProductMass" ] #remove Mass -> moved to tech. data
    ) ;
    samm:operations ( ) ;
    samm:events ( ) ;
