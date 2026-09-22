@@ -1,0 +1,123 @@
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.1.0#> .
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.1.0#> .
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.1.0#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix : <urn:samm:io.catenax.simulation_model.shared.sic_core:1.0.0#> .
+
+:SimulationSICCore a samm:Aspect ;
+   samm:preferredName "SIC Core Mandatory Aspect Model"@en ;
+   samm:description "A shared Aspect Model defining the mandatory SIC core Properties."@en ;
+   samm:version "1.0.0" ;
+   samm:properties ( :simulationTask
+                     :itemUnderTest
+                     :simulationObjective
+                     :entityParameter
+                     :usedSimulationModel
+                     :usedParameter
+                     :usedTool
+                     :taskStatus
+   );
+    samm:operations ();
+    samm:events ().
+
+###########################
+# 2.1. Administrative Data
+###########################
+
+:simulationTask a samm:Property;
+    samm:preferredName "Simulation Task"@en;
+    samm:description "The Simulation Task is the simulation task within the originating company’s project management IT infrastructure."@en;
+    samm:exampleValue "";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_task".
+
+###########################
+# 2.2. Analysis
+###########################
+
+:itemUnderTest a samm:Property;
+    samm:preferredName "Item under Test"@en;
+    samm:description "The Item under Test specifies the product, system, component, or software, etc. that is subject of a simulation being requested by a simulation request or performed by a simulation task."@en;
+    samm:exampleValue "camera34-A-sampleV23";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_item_under_test".
+
+:simulationObjective a samm:Property;
+    samm:preferredName "Simulation Objective"@en;
+    samm:description "The Simulation Objective represents the engineering question that is to be answered by the simulation task."@en;
+    samm:exampleValue "Assessment of the camera resolution by simulation"@en;
+    samm:characteristic :simulationObjectiveList;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_objective".
+
+###########################
+# 2.3. Requirements
+###########################
+
+:entityParameter a samm:Property;
+    samm:preferredName "Entity Parameter"@en;
+    samm:description "The Entity Parameter reference provided parameters of the entity to be modeled."@en;
+    samm:exampleValue "Data sheet of camera"@en;
+    samm:characteristic :entityParameterList;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_task".
+
+###########################
+# 2.6. Execution
+###########################
+
+:usedSimulationModel a samm:Property;
+    samm:preferredName "Used Simulation Model"@en;
+    samm:description "The Used Simulation Model is a simulation model actually used in simulation execution."@en;
+    samm:exampleValue "";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_used_simulation_model".
+
+:usedParameter a samm:Property;
+    samm:preferredName "Used Parameter"@en;
+    samm:description "The Used Parameter is a parameter or parameter set actually used in simulation execution."@en;
+    samm:exampleValue "";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_used_parameter".
+
+:usedTool a samm:Property;
+    samm:preferredName "Used Tool"@en;
+    samm:description "The Used Tool is a tool actually used in simulation execution."@en;
+    samm:exampleValue "";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_used_tool".
+
+###########################
+# 2.8. Fulfillment
+###########################
+
+:taskStatus a samm:Property;
+    samm:preferredName "Task Status"@en;
+    samm:description "The Task Status attribute is the final assessment of the entire simulation task. The attribute shows whether the task is still in progress, aborted, finished or checked out (possible in status in progress)."@en;
+    samm:exampleValue "";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_task_status".
+
+
+###########################
+# 2.10. Composite Attributes
+###########################
+
+:subName a samm:Property;
+    samm:preferredName "Sub-Attribute Name"@en;
+    samm:description "The Name sub-attribute is the unique name of the given attribute within the originating company’s project management IT infrastructure."@en;
+    samm:exampleValue "aeroplaneTT";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-name".
+
+:subVersion a samm:Property;
+    samm:preferredName "Sub-Attribute Version"@en;
+    samm:description "The Version sub-attribute is a human readable version designation for the given attribute."@en;
+    samm:exampleValue "1.0.0";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-version".
+
+:subIdentifier a samm:Property;
+    samm:preferredName "Sub-Attribute Identifier"@en;
+    samm:description "The Identifier sub-attribute is the unique master ID of the entity referred to by the given attribute within the company’s project management IT infrastructure. If the company has a versioning mechanism for the entities referred to by the attribute in the project management IT infrastructure, the version ID is included in the identifier so that the attribute can be referenced with version accuracy."@en;
+    samm:exampleValue "1.0.0";
+    samm:characteristic :UuidV4Trait;
+    samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-version".
