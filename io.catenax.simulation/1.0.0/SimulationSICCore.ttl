@@ -1,8 +1,12 @@
-@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.1.0#> .
-@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.1.0#> .
-@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.1.0#> .
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.2.0#> .
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.2.0#> .
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.2.0#> .
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.1.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <urn:samm:io.catenax.simulation_model.shared.sic_core:1.0.0#> .
+@prefix ext-uuid: <urn:samm:io.catenax.shared.uuid:2.1.0#> .
 
 :SimulationSICCore a samm:Aspect ;
    samm:preferredName "SIC Core Mandatory Aspect Model"@en ;
@@ -28,8 +32,22 @@
     samm:preferredName "Simulation Task"@en;
     samm:description "The Simulation Task is the simulation task within the originating company’s project management IT infrastructure."@en;
     samm:exampleValue "";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic :simulationTaskList;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_task".
+
+:simulationTaskList a samm-c:List;
+   samm:preferredName "Requirement Relation Entity"@en ;
+   samm:description "Entity for relations between requirements."@en ;
+   samm:dataType :SimulationTaskEntity .
+
+:SimulationTaskEntity a samm:Entity ;
+   samm:preferredName "Simulation Task Entity"@en ;
+   samm:description "Entity to describe a Simulation Task"@en ;
+   samm:properties ( 
+    :subName 
+    :subVersion
+    :subIdentifier ) .
+
 
 ###########################
 # 2.2. Analysis
@@ -39,7 +57,7 @@
     samm:preferredName "Item under Test"@en;
     samm:description "The Item under Test specifies the product, system, component, or software, etc. that is subject of a simulation being requested by a simulation request or performed by a simulation task."@en;
     samm:exampleValue "camera34-A-sampleV23";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic samm-c:Text;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_item_under_test".
 
 :simulationObjective a samm:Property;
@@ -49,16 +67,29 @@
     samm:characteristic :simulationObjectiveList;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_objective".
 
+# A Simulation Object can have multiple values
+:SimulationObjectiveList a samm-c:List ;
+   samm:preferredName "Simulation Objective Set"@en ;
+   samm:description "Entity for relations between requirements."@en ;
+   samm:dataType xsd:string .
+
+
 ###########################
 # 2.3. Requirements
 ###########################
 
 :entityParameter a samm:Property;
     samm:preferredName "Entity Parameter"@en;
-    samm:description "The Entity Parameter reference provided parameters of the entity to be modeled."@en;
+    samm:description "The Entity Parameter reference provided parameters of the entity to be modeled. Providing the Entity Parameter attribute is essential input information for the parameterization."@en;
     samm:exampleValue "Data sheet of camera"@en;
     samm:characteristic :entityParameterList;
-    samm:see "https://mic-core.github.io/SIC-Core/main/#_simulation_task".
+    samm:see "https://mic-core.github.io/SIC-Core/main/#_entity_parameter".
+
+:entityParameterList a samm-c:List;
+   samm:preferredName "Entity Parameter Entity"@en ;
+   samm:description "Entity listing the Entity Parameters as Requirements."@en ;
+   samm:dataType xsd:string .
+
 
 ###########################
 # 2.6. Execution
@@ -68,22 +99,62 @@
     samm:preferredName "Used Simulation Model"@en;
     samm:description "The Used Simulation Model is a simulation model actually used in simulation execution."@en;
     samm:exampleValue "";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic :usedSimulationModelSet;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_used_simulation_model".
+
+:usedSimulationModelSet a samm-c:SortedSet;
+   samm:preferredName "Used Simulation Model Set"@en ;
+   samm:description "Set of used Simulation Models."@en ;
+   samm:dataType :UsedSimulationModelEntity .
+
+:UsedSimulationModelEntity a samm:Entity ;
+   samm:preferredName "Used Simulation Model Entity"@en ;
+   samm:description "Entity to describe a used Simulation Model"@en ;
+   samm:properties ( 
+    :subName 
+    :subVersion
+    :subIdentifier ) .
 
 :usedParameter a samm:Property;
     samm:preferredName "Used Parameter"@en;
     samm:description "The Used Parameter is a parameter or parameter set actually used in simulation execution."@en;
     samm:exampleValue "";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic :UsedParameterSet;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_used_parameter".
+
+:UsedParameterSet a samm-c:SortedSet;
+   samm:preferredName "Used Parameter Set"@en ;
+   samm:description "Set of used Parameters."@en ;
+   samm:dataType :UsedParameterEntity .
+
+:UsedParameterEntity a samm:Entity ;
+   samm:preferredName "Used Parameter Entity"@en ;
+   samm:description "Entity to describe a used Parameter"@en ;
+   samm:properties ( 
+    :subName 
+    :subVersion
+    :subIdentifier ) .
 
 :usedTool a samm:Property;
     samm:preferredName "Used Tool"@en;
     samm:description "The Used Tool is a tool actually used in simulation execution."@en;
     samm:exampleValue "";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic :UsedToolSet;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_used_tool".
+
+:UsedToolSet a samm-c:SortedSet;
+   samm:preferredName "Used Tool Set"@en ;
+   samm:description "Set of used Tools."@en ;
+   samm:dataType :UsedToolEntity .
+
+:UsedToolEntity a samm:Entity ;
+   samm:preferredName "Used Tool Entity"@en ;
+   samm:description "Entity to describe a used Tool"@en ;
+   samm:properties ( 
+    :subName 
+    :subVersion
+    :subIdentifier ) .
+
 
 ###########################
 # 2.8. Fulfillment
@@ -92,8 +163,8 @@
 :taskStatus a samm:Property;
     samm:preferredName "Task Status"@en;
     samm:description "The Task Status attribute is the final assessment of the entire simulation task. The attribute shows whether the task is still in progress, aborted, finished or checked out (possible in status in progress)."@en;
-    samm:exampleValue "";
-    samm:characteristic :UuidV4Trait;
+    samm:exampleValue "Checked out: in progress but checked out from data management system";
+    samm:characteristic samm-c:Text;
     samm:see "https://mic-core.github.io/SIC-Core/main/#_task_status".
 
 
@@ -105,19 +176,24 @@
     samm:preferredName "Sub-Attribute Name"@en;
     samm:description "The Name sub-attribute is the unique name of the given attribute within the originating company’s project management IT infrastructure."@en;
     samm:exampleValue "aeroplaneTT";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic samm-c:Text;
     samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-name".
 
 :subVersion a samm:Property;
     samm:preferredName "Sub-Attribute Version"@en;
     samm:description "The Version sub-attribute is a human readable version designation for the given attribute."@en;
     samm:exampleValue "1.0.0";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic :subVersionList;
     samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-version".
+
+:subVersionList a samm-c:List;
+   samm:preferredName "List of Versions"@en ;
+   samm:description "List of all Versions of the specific."@en ;
+   samm:dataType xsd:string .
 
 :subIdentifier a samm:Property;
     samm:preferredName "Sub-Attribute Identifier"@en;
     samm:description "The Identifier sub-attribute is the unique master ID of the entity referred to by the given attribute within the company’s project management IT infrastructure. If the company has a versioning mechanism for the entities referred to by the attribute in the project management IT infrastructure, the version ID is included in the identifier so that the attribute can be referenced with version accuracy."@en;
     samm:exampleValue "1.0.0";
-    samm:characteristic :UuidV4Trait;
+    samm:characteristic ext-uuid:UuidV4Trait ;
     samm:see "https://mic-core.github.io/SIC-Core/main/#sub-attr-version".
