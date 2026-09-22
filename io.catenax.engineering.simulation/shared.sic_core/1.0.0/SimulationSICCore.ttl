@@ -76,12 +76,12 @@
 :entityParameter a samm:Property;
     samm:preferredName "Entity Parameter"@en;
     samm:description "The Entity Parameter reference provided parameters of the entity to be modeled. Providing the Entity Parameter attribute is essential input information for the parameterization. Based on https://mic-core.github.io/SIC-Core/main/#_entity_parameter"@en;
-    samm:exampleValue "Data sheet of camera"@en;
     samm:characteristic :entityParameterList.
 
 :entityParameterList a samm-c:List;
    samm:preferredName "Entity Parameter Entity"@en ;
    samm:description "Entity listing the Entity Parameters as Requirements."@en ;
+   samm:exampleValue "Data sheet of camera"@en;
    samm:dataType xsd:string .
 
 
@@ -92,7 +92,6 @@
 :usedSimulationModel a samm:Property;
     samm:preferredName "Used Simulation Model"@en;
     samm:description "The Used Simulation Model is a simulation model actually used in simulation execution. Based on https://mic-core.github.io/SIC-Core/main/#_used_simulation_model"@en;
-    samm:exampleValue "";
     samm:characteristic :usedSimulationModelSet.
 
 :usedSimulationModelSet a samm-c:SortedSet;
@@ -129,7 +128,6 @@
 :usedTool a samm:Property;
     samm:preferredName "Used Tool"@en;
     samm:description "The Used Tool is a tool actually used in simulation execution. based on https://mic-core.github.io/SIC-Core/main/#_used_tool"@en;
-    samm:exampleValue "";
     samm:characteristic :UsedToolSet.
 
 :UsedToolSet a samm-c:SortedSet;
