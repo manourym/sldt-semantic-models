@@ -6,7 +6,7 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix : <urn:samm:io.catenax.engineering.simulation.shared.sic_core:1.0.0#> .
-# @prefix ext-uuid: <urn:samm:io.catenax.shared.uuid:2.1.0#> .
+@prefix ext-uuid: <urn:samm:io.catenax.shared.uuid:2.1.0#> .
 
 :SimulationSICCore a samm:Aspect ;
    samm:preferredName "SIC Core Mandatory Aspect Model"@en ;
@@ -179,5 +179,5 @@
 :subIdentifier a samm:Property;
     samm:preferredName "Sub-Attribute Identifier"@en;
     samm:description "The Identifier sub-attribute is the unique master ID of the entity referred to by the given attribute within the company’s project management IT infrastructure. If the company has a versioning mechanism for the entities referred to by the attribute in the project management IT infrastructure, the version ID is included in the identifier so that the attribute can be referenced with version accuracy. Based on https://mic-core.github.io/SIC-Core/main/#sub-attr-version"@en;
-    samm:exampleValue "1.0.0";
-    samm:characteristic samm-c:Text.
+   samm:exampleValue "urn:uuid:48878d48-6f1d-47f5-8ded-a441d0d879df" ;
+    samm:characteristic ext-uuid:UuidV4Trait.
