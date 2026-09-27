@@ -1,0 +1,53 @@
+@prefix samm: <urn:samm:org.eclipse.esmf.samm:meta-model:2.2.0#> .
+@prefix samm-c: <urn:samm:org.eclipse.esmf.samm:characteristic:2.2.0#> .
+@prefix samm-e: <urn:samm:org.eclipse.esmf.samm:entity:2.2.0#> .
+@prefix unit: <urn:samm:org.eclipse.esmf.samm:unit:2.2.0#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sic-core: <urn:samm:io.catenax.engineering.simulation.shared.sic_core:1.0.0#> .
+@prefix ext-uuid: <urn:samm:io.catenax.shared.uuid:2.1.0#> .
+#@prefix requirements: <urn:samm:io.catenax.requirements:2.0.0#>
+@prefix : <urn:samm:io.catenax.engineering.simulation.geometrical:1.0.0#> .
+
+:GeometricSimulationSpecification a samm:Aspect ;
+   samm:preferredName "SIC Core Mandatory Aspect Model"@en ;
+   samm:description "A shared Aspect Model defining the mandatory SIC core Properties."@en ;
+   samm:version "1.0.0" ;
+   samm:properties ( sic-core:simulationTask
+                     sic-core:itemUnderTest
+                     sic-core:simulationObjective
+                     sic-core:entityParameter
+                     sic-core:usedSimulationModel
+                     sic-core:usedParameter
+                     sic-core:usedTool
+                     sic-core:taskStatus
+                     [samm:property sic-core:testCaseRequirement; samm:optional true]
+                     [samm:property sic-core:testCase; samm:optional true]
+                     :acceptanceCriteria
+                     :physicalBoundaries
+   );
+    samm:operations ();
+    samm:events ().
+
+:acceptanceCriteria a samm:Property;
+    samm:preferredName "Acceptance Criteria"@en;
+    samm:description "A list of the relevant acceptance criteria of simulation."@en;
+    samm:characteristic :acceptanceCriteriaList.
+
+:acceptanceCriteriaList a samm-c:List ;
+   samm:preferredName "Acceptance Criteria List"@en ;
+   samm:description "List of the acceptance criteria for the simulation."@en ;
+   samm:exampleValue "The simulation run max. 2min"@en;
+   samm:dataType xsd:string .
+
+:physicalBoundaries a samm:Property;
+    samm:preferredName "Physical Boundaries"@en;
+    samm:description "A list of physical boundary conditions (e.g. bounding boxes) for a simulation."@en;
+    samm:characteristic :physicalBoundariesList.
+
+:physicalBoundariesList a samm-c:List ;
+   samm:preferredName "Physical Boundary List"@en ;
+   samm:description "List of the physical boundaries for the simulation."@en ;
+   samm:exampleValue "The component has a force of 1kN at edge CS2"@en;
+   samm:dataType xsd:string .
