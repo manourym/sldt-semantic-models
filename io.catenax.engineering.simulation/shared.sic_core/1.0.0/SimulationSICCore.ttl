@@ -10,7 +10,7 @@
 
 :SimulationSICCore a samm:Aspect ;
    samm:preferredName "SIC Core Mandatory Aspect Model"@en ;
-   samm:description "A shared Aspect Model defining the mandatory SIC core Properties."@en ;
+   samm:description "A shared Aspect Model defining the SIC core Properties relevant for data ecosystem use cases."@en ;
    samm:version "1.0.0" ;
    samm:properties ( :simulationTask
                      :itemUnderTest
@@ -20,6 +20,8 @@
                      :usedParameter
                      :usedTool
                      :taskStatus
+                     [samm:property :testCaseRequirement; samm:optional true]
+                     [samm:property :testCase; samm:optional true]
    );
     samm:operations ();
     samm:events ().
@@ -83,6 +85,40 @@
    samm:description "Entity listing the Entity Parameters as Requirements."@en ;
    samm:exampleValue "Data sheet of camera"@en;
    samm:dataType xsd:string .
+
+:testCaseRequirement a samm:Property;
+    samm:preferredName "Test Case Requirements"@en;
+    samm:description "The Test Case Requirements is the description of the goals and objectives of a test case. Based on https://mic-core.github.io/SIC-Core/main/#_test_case_requirements"@en;
+    samm:characteristic :testCaseRequirementList.
+
+:testCaseRequirementList a samm-c:List;
+   samm:preferredName "Test Case Requirements List"@en ;
+   samm:description "List of Test Case Requirements."@en ;
+   samm:dataType xsd:string .
+
+
+###########################
+# 2.5. Implementation
+###########################
+
+:testCase a samm:Property;
+    samm:preferredName "Test Case"@en;
+    samm:description "The Test Case is the implemented test cases within the company’s project management IT infrastructure. Based on https://mic-core.github.io/SIC-Core/main/#_test_case"@en;
+    samm:characteristic :testCaseList.
+
+:testCaseList a samm-c:List;
+   samm:preferredName "Test Case List"@en ;
+   samm:description "List of implemented Test Cases."@en ;
+   samm:dataType :TestCaseEntity .
+
+:TestCaseEntity a samm:Entity ;
+   samm:preferredName "Test Case Entity"@en ;
+   samm:description "Entity to describe a Test Case"@en ;
+   samm:properties ( 
+    :subName 
+    :subVersion
+    :subIdentifier ) .
+
 
 
 ###########################
